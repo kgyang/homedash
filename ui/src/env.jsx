@@ -3,14 +3,17 @@ import axios from 'axios'
 import './env.css'
 
 function Env() {
+  const [reading, setReading] = useState(false)
   const [envdata, setEnvData] = useState(null)
 
   const readEnvData = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/env');
+      setReading(true)
+      const response = await axios.get(window.location.toString() + 'api/v1/env');
       const ret = response.data;
       console.log("env", ret);
       setEnvData(ret);
+      setReading(false);
     } catch (error) {
       console.error(error);
     }
@@ -19,12 +22,12 @@ function Env() {
   return (
     <>
       <div className="env">
-        <button onClick={readEnvData}>
-          Click to fresh
+        <button onClick={readEnvData} disabled={reading}>
+          Click to refresh
         </button>
-        {envdata && envdata.temperature && <p className="temperature">T: {envdata.temperature} </p> }
-        {envdata && envdata.humidity && <p className="humidity">H: {envdata.humidity} </p> }
-        {envdata && envdata.ch2o && <p className="ch2o">CH2O: {envdata.ch2o} </p> }
+        {envdata && envdata.temperature && <p className="temperature">Temperature<br/>{envdata.temperature} </p> }
+        {envdata && envdata.humidity && <p className="humidity">Humidity<br/>{envdata.humidity} </p> }
+        {envdata && envdata.ch2o && <p className="ch2o">CH2O<br/>{envdata.ch2o} </p> }
       </div>
     </>
   )
