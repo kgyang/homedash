@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/kgyang/homedash/handler"
+	"github.com/kgyang/homedash/server/handler"
 )
 
 func main() {
 	h := handler.NewHandler()
-	h.Server.ListenAndServ()
+	h.Server.ListenAndServe()
 }
