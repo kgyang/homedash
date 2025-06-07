@@ -6,5 +6,5 @@ import (
 
 func main() {
 	h := handler.NewHandler()
-	h.Server.ListenAndServe()
+	h.Start()
 }

@@ -11,14 +11,21 @@ const (
 )
 
 type Handler struct {
-	Server *http.Server
+	server *http.Server
 }
 
 func NewHandler() *Handler {
 	mux := http.NewServeMux()
-	h := &Handler{Server:&http.Server{Addr:":8080", Handler:mux}}
+	addr := ":8080"
+	h := &Handler{server:&http.Server{Addr:addr, Handler:mux}}
 	mux.HandleFunc(GetEnvPath, h.GetEnvHandler)
+	mux.Handle("/", http.FileServer(http.Dir("./dist")))
 	return h
+}
+
+func (h *Handler) Start() {
+	log.Printf("http server started")
+	h.server.ListenAndServe()
 }
 
 func (h *Handler) GetEnvHandler(w http.ResponseWriter, r *http.Request) {
