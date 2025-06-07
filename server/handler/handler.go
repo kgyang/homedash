@@ -1,9 +1,11 @@
 package handler
 
 import (
-	"net/http"
-	"log"
 	"encoding/json"
+	"log"
+	"net/http"
+
+	"github.com/kgyang/homedash/server/env"
 )
 
 const (
@@ -11,13 +13,14 @@ const (
 )
 
 type Handler struct {
+	env    *env.Env
 	server *http.Server
 }
 
 func NewHandler() *Handler {
 	mux := http.NewServeMux()
 	addr := ":8080"
-	h := &Handler{server:&http.Server{Addr:addr, Handler:mux}}
+	h := &Handler{server: &http.Server{Addr: addr, Handler: mux}, env: env.NewEnv()}
 	mux.HandleFunc(GetEnvPath, h.GetEnvHandler)
 	mux.Handle("/", http.FileServer(http.Dir("./dist")))
 	return h
@@ -29,7 +32,7 @@ func (h *Handler) Start() {
 }
 
 func (h *Handler) GetEnvHandler(w http.ResponseWriter, r *http.Request) {
-	resp := &GetEnvResponse{Temperature:"27.0", Humidity:"88.2"}
+	resp := h.env.GetEnvData()
 	jresp, err := json.Marshal(resp)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
