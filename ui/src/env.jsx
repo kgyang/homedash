@@ -25,9 +25,9 @@ function Env() {
         <button onClick={readEnvData} disabled={reading}>
 	  {envdata ? "Click to refresh environment data":"Click to get environment data"}
         </button>
-        {envdata && envdata.temperature && <p className="temperature">Temperature<br/>{envdata.temperature} </p> }
-        {envdata && envdata.humidity && <p className="humidity">Humidity<br/>{envdata.humidity} </p> }
-        {envdata && envdata.ch2o && <p className="ch2o">CH2O<br/>{envdata.ch2o} </p> }
+        {envdata && envdata.temperature && <p className="temperature">Temperature<br/>{envdata.temperature}</p> }
+        {envdata && envdata.humidity && <p className="humidity">Humidity<br/>{envdata.humidity}</p> }
+        {envdata && envdata.ch2o && <p className="ch2o">CH2O<br/>{envdata.ch2o}</p> }
       </div>
     </>
   )
