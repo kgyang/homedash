@@ -21,9 +21,9 @@ function Env() {
 
   return (
     <>
-      <div className="env">
+      <div id="env">
         <button onClick={readEnvData} disabled={reading}>
-          Click to refresh
+	  {envdata ? "Click to refresh environment data":"Click to get environment data"}
         </button>
         {envdata && envdata.temperature && <p className="temperature">Temperature<br/>{envdata.temperature} </p> }
         {envdata && envdata.humidity && <p className="humidity">Humidity<br/>{envdata.humidity} </p> }
